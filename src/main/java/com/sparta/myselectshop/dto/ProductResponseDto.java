@@ -31,4 +31,5 @@ public class ProductResponseDto {
             productFolderList.add(new FolderResponseDto(productFolder.getFolder()));
         }
     }
+
 }
