@@ -3,7 +3,6 @@ package com.sparta.msa_exam.product.controller;
 import com.sparta.msa_exam.product.dto.ProductCreateRequestDto;
 import com.sparta.msa_exam.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody  ProductCreateRequestDto requestDto) {
-        System.out.println("컨트롤러 Name: " + requestDto.getName());
-        System.out.println("컨트롤러임돠Supply Price: " + requestDto.getSupplyPrice());
         return ResponseEntity.ok(productService.createProduct(requestDto));
     }
 

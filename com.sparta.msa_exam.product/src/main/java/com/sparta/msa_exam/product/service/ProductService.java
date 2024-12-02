@@ -21,9 +21,6 @@ public class ProductService {
 
     public ProductCreateResponseDto createProduct(ProductCreateRequestDto requestDto) {
 
-        System.out.println("Name: " + requestDto.getName());
-        System.out.println("Supply Price: " + requestDto.getSupplyPrice());
-
         Product product = Product.createProduct(requestDto.getName(), requestDto.getSupplyPrice());
 
         Product savedProduct = productRepository.save(product);
