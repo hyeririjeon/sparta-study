@@ -1,5 +1,6 @@
 package com.sparta.msa_exam.product.service;
 
+import com.sparta.msa_exam.product.dto.GetProductResponseDto;
 import com.sparta.msa_exam.product.dto.ProductCreateRequestDto;
 import com.sparta.msa_exam.product.dto.ProductCreateResponseDto;
 import com.sparta.msa_exam.product.dto.SearchProductResponseDto;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @RequiredArgsConstructor
@@ -31,6 +33,18 @@ public class ProductService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public GetProductResponseDto getProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Product not found"));
+
+        return GetProductResponseDto.builder()
+                .productId(product.getProductId())
+                .name(product.getName())
+                .supplyPrice(product.getSupplyPrice())
+                .build();
+    }
+
     public Page<SearchProductResponseDto> getProducts(int page, int size, String sortBy, boolean isAsc) {
 
         Sort sort = isAsc ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
@@ -46,4 +60,5 @@ public class ProductService {
                 .build());
 
     }
+
 }

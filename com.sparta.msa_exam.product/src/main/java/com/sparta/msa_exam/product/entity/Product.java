@@ -15,8 +15,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private Integer supplyPrice;
 
     public static Product createProduct(String name, Integer supply_price) {

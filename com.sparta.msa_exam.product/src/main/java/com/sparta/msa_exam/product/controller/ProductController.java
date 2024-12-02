@@ -1,5 +1,6 @@
 package com.sparta.msa_exam.product.controller;
 
+import com.sparta.msa_exam.product.dto.GetProductResponseDto;
 import com.sparta.msa_exam.product.dto.ProductCreateRequestDto;
 import com.sparta.msa_exam.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody  ProductCreateRequestDto requestDto) {
         return ResponseEntity.ok(productService.createProduct(requestDto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetProductResponseDto> getProduct(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProduct(id));
     }
 
     @GetMapping
