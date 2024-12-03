@@ -25,7 +25,7 @@ public class CacheConfig {
                 .entryTtl(Duration.ofSeconds(60))
                 .computePrefixWith(CacheKeyPrefix.simple())
                 .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json())
+                        RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java())
                 );
 
         return RedisCacheManager.builder(connectionFactory)

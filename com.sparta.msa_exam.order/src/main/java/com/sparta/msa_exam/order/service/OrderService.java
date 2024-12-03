@@ -101,7 +101,7 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "orderCache", key = "#orderId", cacheManager = "cacheManager")
+    @Cacheable(cacheNames = "orderCache", key = "#orderId")
     public OrderResponseDto getOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(()-> new RuntimeException("order not found"));
