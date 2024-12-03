@@ -1,0 +1,7 @@
+server:
+  port: 19094
+eureka:
+  instance:
+    instance-id: product-service-19094
+    metadata-map:
+      weight: 30
