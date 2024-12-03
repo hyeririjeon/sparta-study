@@ -16,14 +16,9 @@ public class CustomPostFilter implements GlobalFilter, Ordered{
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-            Object loadBalancerResponse = exchange.getAttribute("org.springframework.cloud.gateway.support.ServerWebExchangeUtils.gatewayLoadBalancerResponse");
-            if (loadBalancerResponse instanceof DefaultResponse) {
-                ServiceInstance serviceInstance = ((DefaultResponse) loadBalancerResponse).getServer();
-                if (serviceInstance != null) {
-                    String instancePort = String.valueOf(serviceInstance.getPort());
-                    exchange.getResponse().getHeaders().add("Server-Port", instancePort);
-                }
-            }
+            int serverPort = exchange.getRequest().getURI().getPort();
+            exchange.getResponse().getHeaders().add("Server-Port", String.valueOf(serverPort));
+
         }));
     }
 
