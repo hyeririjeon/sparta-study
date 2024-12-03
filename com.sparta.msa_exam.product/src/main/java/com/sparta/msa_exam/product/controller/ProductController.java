@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
@@ -19,13 +21,18 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(requestDto));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetProductResponseDto> getProduct(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProduct(id));
+    @GetMapping("/{productId}")
+    public ResponseEntity<GetProductResponseDto> getProduct(@PathVariable Long productId) {
+        return ResponseEntity.ok(productService.getProduct(productId));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<GetProductResponseDto>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping
-    public ResponseEntity<?> getProducts(
+    public ResponseEntity<?> getPageProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "supplyPrice") String sortBy,

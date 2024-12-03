@@ -14,6 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @Service
@@ -34,8 +37,8 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public GetProductResponseDto getProduct(Long id) {
-        Product product = productRepository.findById(id)
+    public GetProductResponseDto getProduct(Long productId) {
+        Product product = productRepository.findById(productId)
                 .orElseThrow(()-> new RuntimeException("Product not found"));
 
         return GetProductResponseDto.builder()
@@ -43,6 +46,18 @@ public class ProductService {
                 .name(product.getName())
                 .supplyPrice(product.getSupplyPrice())
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetProductResponseDto> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(product -> GetProductResponseDto.builder()
+                        .productId(product.getProductId())
+                        .supplyPrice(product.getSupplyPrice())
+                        .name(product.getName())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public Page<SearchProductResponseDto> getProducts(int page, int size, String sortBy, boolean isAsc) {
